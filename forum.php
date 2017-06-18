@@ -1,4 +1,4 @@
-<?php include("functions/function.php");gen_header(); ?>
+<?php include("functions/function.php");gen_header(FF); ?>
 </div>
 <div class="about_banner">
 	<div class="container">

@@ -1,4 +1,4 @@
-﻿<?php include("functions/function.php");gen_header(); ?>
+﻿<?php include("functions/function.php");gen_header(I); ?>
 <section class="slider">
   <div class="flexslider">
 	<ul class="slides">
@@ -64,21 +64,21 @@
     </div>
 	       <div class="bs-example bs-example-tabs col-md-9" role="tabpanel" data-example-id="togglable-tabs">
 	       	 <ul id="myTab" class="nav nav-tabs" role="tablist">
-			  <li role="presentation" class="active presentation_2"><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">Latest thread</a></li>
+			  <li role="presentation" class="active presentation_2"><a href="index.php">Latest thread</a></li>
 			  <li role="presentation"><a href="#profile" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile">
 			  	<div class="btn-group">
                     <a class="btn btn_1 btn-default dropdown-toggle dropdown-toggle_1" data-toggle="dropdown" aria-expanded="true">College<span class="caret"></span></a>
                     <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                        <li><a href="#">COLPHYS</a></li>
-                        <li><a href="#">COLBIOS</a></li>
-                        <li><a href="#">COLANIM</a></li>
-                        <li><a href="#">COLPLANT</a></li>
-                        <li><a href="#">COLERM</a></li>
-                        <li><a href="#">COLAMRUD</a></li>
-												<li><a href="#">COLFHEC</a></li>
-                        <li><a href="#">COLENG</a></li>
-                        <li><a href="#">COLVET</a></li>
-                        <li><a href="#">COLMAS</a></li>
+                        <li><a href="index.php?college=1">COLPHYS</a></li>
+                        <li><a href="index.php?college=2">COLBIOS</a></li>
+                        <li><a href="index.php?college=3">COLANIM</a></li>
+                        <li><a href="index.php?college=4">COLPLANT</a></li>
+                        <li><a href="index.php?college=5">COLERM</a></li>
+                        <li><a href="index.php?college=6">COLAMRUD</a></li>
+												<li><a href="index.php?college=7">COLFHEC</a></li>
+                        <li><a href="index.php?college=8">COLENG</a></li>
+                        <li><a href="index.php?college=9">COLVET</a></li>
+                        <li><a href="index.php?college=10">COLMAS</a></li>
                     </ul>
                  </div></a></li>
 			  <li role="presentation"><a href="#profile1" role="tab" id="profile-tab1" data-toggle="tab" aria-controls="profile1">
@@ -90,8 +90,10 @@
 		      <div class="panel-body">
 <!-- PHP code to generate recent thread list-->
 <?php
-	$get_threads = "select * from thread";
-	$run_threads = mysqli_query ($con,$get_threads);
+if (isset($_GET['college'])){
+			$col = $_GET ['college'];
+			$get_threads = "SELECT * FROM `thread` WHERE category='$col'";
+			$run_threads = mysqli_query ($con,$get_threads);
 
 	while ($row_threads = mysqli_fetch_array ($run_threads)){
 		$thread_id = $row_threads['id'];
@@ -99,10 +101,11 @@
 		$thread_body = $row_threads['body'];
 		$thread_dt = $row_threads['dt'];
 		$thread_creator = $row_threads['creator'];
+		$thread_avatar = $row_threads['avatar'];
 	
 		echo "<div class='pull-left' style='margin:0 5px;'>
                 		<a class='thumbnail' href='profile.php'>
-                			<img src='images/pic13.jpg' width='50' height='50'>
+                			<img src='users/users_images/$thread_avatar' width='50' height='50'>
                 		</a>
                 	</div>
                 	<div class='panel-body_1'>
@@ -116,6 +119,36 @@
                     </div>
                    <div class='clearfix'></div><hr>";
 	}
+}
+else{
+	$get_threads = "select * from thread";
+	$run_threads = mysqli_query ($con,$get_threads);
+
+	while ($row_threads = mysqli_fetch_array ($run_threads)){
+		$thread_id = $row_threads['id'];
+		$thread_title = $row_threads['title'];
+		$thread_body = $row_threads['body'];
+		$thread_dt = $row_threads['dt'];
+		$thread_creator = $row_threads['creator'];
+		$thread_avatar = $row_threads['avatar'];
+
+		echo "<div class='pull-left' style='margin:0 5px;'>
+                		<a class='thumbnail' href='profile.php'>
+                			<img src='users/users_images/$thread_avatar' width='50' height='50'>
+                		</a>
+                	</div>
+                	<div class='panel-body_1'>
+                	  <h3>
+                		  <a href='profile.php' style='text-transform: capitalize;'> $thread_creator</a>
+                		$thread_title <div class='pull-right'>$thread_dt<i class='fa fa-refresh refresh_1'></i></div>
+                      </h3>
+                      <h4>
+                        <a href='thread.php'>$thread_body</a>
+                      </h4>
+                    </div>
+                   <div class='clearfix'></div><hr>";
+	}
+}
 ?>
 
                </div>
@@ -157,6 +190,7 @@ if ($run_user){
 	echo "<script> alert ('Registration Successful!') </script>";
 }
 }
+
 
 
 if (isset($_POST['login'])){
