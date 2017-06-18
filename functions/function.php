@@ -1,6 +1,14 @@
 <?php
 $con = mysqli_connect("localhost","root","","funicom");
 
+define("F", "FAQS");
+define("I", "HOME");
+define("D", "DASHBOARD");
+define("FF", "FORUM");
+define("A", "ABOUT");
+define("C", "CONTACT US");
+
+
 function footer()
 {
 	echo ";
@@ -134,7 +142,7 @@ function footer()
 <!-- FlexSlider -->";
 }
 
-function gen_header(){
+function gen_header($pname){
 	session_start();
 	echo"
 <!--
@@ -146,7 +154,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE html>
 <html>
 <head>
-<title>FUNICOM</title>
+<title>FUNICOM | " . $pname . "</title>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
 <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
 <meta name='keywords' content='FUNAAB, community, interactive, students, funaabite, funicom' />
@@ -388,9 +396,10 @@ $(function() {
    <!-- Collect the nav links, forms, and other content for toggling -->
     <div class='collapse navbar-collapse' id='bs-megadropdown-tabs'>
         <ul class='nav navbar-nav nav_1'>
-            <li class='current_page'><a href='index.php'>Home</a></li>
+            <li><a href='index.php'>Home</a></li>
             <li><a href='forum.php'>Forum</a></li>
             <li><a href='faq.php'>FAQs</a></li>
+			<li><a href='about.php'>About</a></li>
         </ul>
         </div><!-- /.navbar-collapse -->
    </div>
